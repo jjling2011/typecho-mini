@@ -1,5 +1,5 @@
 ARG DOMAIN="www.typecho.test"
-ARG TYPECHO_URL="https://github.com/typecho/typecho/releases/download/v1.2.0/typecho.zip"
+ARG TYPECHO_URL="https://github.com/typecho/typecho/releases/download/v1.2.1/typecho.zip"
 
 ARG BUILDER_TYPECHO_DIR="/root/typecho"
 ARG BUILDER_CERT_DIR="/root/ssl"
