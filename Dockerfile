@@ -36,7 +36,7 @@ COPY --from=builder ${BUILDER_CERT_DIR}/ ${SSL_DIR}/
 COPY --from=builder ${BUILDER_TYPECHO_DIR}/ ${HTTP_DOC_DIR}/
 COPY rootfs /
 
-RUN chown -R nobody:nobody /run ${HTTP_DOC_DIR} ${NGINX_DIRS} \
+RUN chown -R nobody:nobody /run /var/www ${NGINX_DIRS} \
   && chmod a+r ${SSL_DIR}/*
 
 USER nobody
