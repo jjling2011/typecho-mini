@@ -28,8 +28,9 @@ ARG HTTP_DOC_DIR="/var/www/html"
 ARG SSL_DIR="/etc/nginx/conf.d"
 ARG NGINX_DIRS="/var/lib/nginx /var/log/nginx"
 
-RUN apk add --update --no-cache nginx php8 php8-fpm \
-  php8-json php8-pdo_sqlite php8-mbstring php8-ctype php8-curl php8-session php8-tokenizer \
+RUN apk add --update --no-cache nginx nginx-mod-http-dav-ext \
+  php8 php8-fpm php8-json php8-pdo_sqlite php8-mbstring \
+  php8-ctype php8-curl php8-session php8-tokenizer \
   && mkdir -p ${SSL_DIR} ${NGINX_DIRS}
 
 COPY --from=builder ${BUILDER_CERT_DIR}/ ${SSL_DIR}/
