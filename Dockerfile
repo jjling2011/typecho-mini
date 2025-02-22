@@ -31,13 +31,13 @@ ARG NGINX_DIRS="/var/lib/nginx /var/log/nginx"
 RUN apk add --update --no-cache nginx nginx-mod-http-dav-ext \
   php8 php8-fpm php8-json php8-pdo_sqlite php8-mbstring \
   php8-ctype php8-curl php8-session php8-tokenizer \
-  && mkdir -p ${SSL_DIR} ${NGINX_DIRS}
+  && mkdir -p ${SSL_DIR} ${NGINX_DIRS} ${HTTP_DOC_DIR}
 
 COPY --from=builder ${BUILDER_CERT_DIR}/ ${SSL_DIR}/
 COPY --from=builder ${BUILDER_TYPECHO_DIR}/ ${HTTP_DOC_DIR}/
 COPY rootfs /
 
-RUN chown -R nobody:nobody /run /var/www ${NGINX_DIRS} \
+RUN chown -R nobody:nobody /run ${HTTP_DOC_DIR} ${NGINX_DIRS} \
   && chmod a+r ${SSL_DIR}/*
 
 USER nobody
