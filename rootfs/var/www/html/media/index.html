@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>简单音乐播放器</title>
-        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+        <script src="./js/jquery.min.js"></script>
         <script src="./js/pagination.js"></script>
         <style>
             html {
@@ -17,8 +17,8 @@
                 flex-direction: column;
                 flex-grow: 1;
                 display: flex;
-                min-width: 30rem;
-                max-width: 30rem;
+                width: 100vw;
+                max-width: 26rem;
                 margin: 0 auto;
             }
 
@@ -83,16 +83,16 @@
         </audio>
         <div class="box">
             <input
-                type="text"
-                id="search"
-                oninput="doSearch()"
-                placeholder="搜索歌曲..."
-            />
-            <input
                 type="button"
                 value="❌"
                 onclick="clearSearchKeyword()"
                 title="清空搜索关键词"
+            />
+            <input
+                type="text"
+                id="search"
+                oninput="doSearch()"
+                placeholder="搜索歌曲..."
             />
             <input
                 type="button"
@@ -102,14 +102,8 @@
             />
             <input
                 type="button"
-                value="⏹"
-                onclick="stopPlay()"
-                title="停止播放"
-            />
-            <input
-                type="button"
                 value="🔄"
-                onclick="updateMusicDb()"
+                onclick="confirmUpdateMusicDb()"
                 title="更新数据库"
             />
         </div>
@@ -125,6 +119,7 @@
 
         <script>
             const MUSIC_DB_KEY = 'music-db-key'
+            const MUSIC_UPDATE_DATE_KEY = 'music-update-key'
 
             let db = []
             let searchResult = []
@@ -228,20 +223,15 @@
 
             function clearSearchKeyword() {
                 searchInput.value = ''
-                setTimeout(() => doSearch(), 1)
+                setTimeout(() => {
+                    doSearch()
+                    searchInput.focus()
+                }, 1)
             }
 
             function randPlay() {
                 const src = randPick(db)
                 play(src)
-            }
-
-            function stopPlay() {
-                try {
-                    audio.pause()
-                } catch (err) {
-                    log(`stopPlay() error: ${err.message}`)
-                }
             }
 
             audio.addEventListener('ended', () => {
@@ -321,8 +311,10 @@
 
             function saveSettings() {
                 if (db.length || db.length === 0) {
-                    const s = JSON.stringify(db)
-                    window.localStorage.setItem(MUSIC_DB_KEY, s)
+                    const data = JSON.stringify(db)
+                    window.localStorage.setItem(MUSIC_DB_KEY, data)
+                    const date = new Date().toLocaleString()
+                    window.localStorage.setItem(MUSIC_UPDATE_DATE_KEY, date)
                 }
             }
 
@@ -332,6 +324,16 @@
                     return JSON.parse(s || '[]')
                 } catch {}
                 return []
+            }
+
+            function confirmUpdateMusicDb() {
+                const last = window.localStorage.getItem(MUSIC_UPDATE_DATE_KEY)
+                if (
+                    !last ||
+                    confirm(`上次更新：${last}\n确定要更新数据库吗？`)
+                ) {
+                    updateMusicDb()
+                }
             }
 
             function updateMusicDb() {
@@ -351,6 +353,13 @@
             }
 
             function init() {
+                if ('mediaSession' in navigator) {
+                    log('注册<下一首>按钮响应函数')
+                    navigator.mediaSession.setActionHandler('nexttrack', () =>
+                        randPlay(),
+                    )
+                }
+
                 db = loadSettings()
                 if (db.length && db.length > 0) {
                     setStatus('加载数据...')
