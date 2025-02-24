@@ -148,7 +148,7 @@ var Pagination = (function () {
 
             // 页码
             for (var i = 0; i < this.pageCount; i++) {
-                if (this.pageCount > 7 && i === this.pageCount - 1) {
+                if (this.pageCount > 5 && i === this.pageCount - 1) {
                     pageLastMore.setAttribute('p_index', i)
                     page.appendChild(pageLastMore)
                 }
@@ -157,7 +157,7 @@ var Pagination = (function () {
                 pageItem.innerHTML = i + 1
                 pageItem.setAttribute('p_index', i)
                 page.appendChild(pageItem)
-                if (this.pageCount > 7 && i === 0) {
+                if (this.pageCount > 5 && i === 0) {
                     pageFirstMore.setAttribute('p_index', i)
                     page.appendChild(pageFirstMore)
                 }
@@ -169,39 +169,6 @@ var Pagination = (function () {
             pageLast.setAttribute('p_index', this.pageCount - 1)
             pageLast.title = '末页'
             page.appendChild(pageLast)
-
-            var pageOptions = document.createElement('li')
-            pageOptions.className = 'page-options'
-
-            // 页码
-            var pageSizeChange = document.createElement('div')
-            pageSizeChange.className = 'page-options-size-changer'
-
-            // 页码尺寸选择
-
-            var pageSizeSelect = document.createElement('select')
-
-            for (var i = 0; i < this.pageSizeOptions.length; i++) {
-                var pageSizeOption = document.createElement('option')
-                pageSizeOption.innerHTML = `${this.pageSizeOptions[i]}条 / 页`
-                pageSizeOption.value = this.pageSizeOptions[i]
-                if (this.pageSizeOptions[i] === parseInt(this.pageSize)) {
-                    pageSizeOption.setAttribute('selected', '')
-                }
-
-                pageSizeOption.setAttribute('p_size', i)
-                pageSizeSelect.appendChild(pageSizeOption)
-            }
-            pageSizeSelect.value = this.pageSize
-            pageSizeChange.appendChild(pageSizeSelect)
-            pageOptions.appendChild(pageSizeChange)
-
-            // 页面快捷跳转
-            var pageSizeJumper = document.createElement('div')
-            pageSizeJumper.className = 'page-options-jumper'
-            pageSizeJumper.innerHTML = '跳至<input type="text" />页'
-            pageOptions.appendChild(pageSizeJumper)
-            page.appendChild(pageOptions)
 
             // 清空分页内容
             this.container.empty()
@@ -389,8 +356,8 @@ var Pagination = (function () {
                 item.classList.add('hide')
                 // 显示more区间中间的5个页码
                 if (
-                    p_index + 1 > centerPageIndex - 3 &&
-                    p_index + 1 < centerPageIndex + 3
+                    p_index + 1 > centerPageIndex - 2 &&
+                    p_index + 1 < centerPageIndex + 2
                 ) {
                     item.classList.remove('hide')
                 }
