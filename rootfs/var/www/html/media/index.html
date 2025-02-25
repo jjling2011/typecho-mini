@@ -207,11 +207,14 @@
                     setStatus('错误：路径为空')
                     return
                 }
-                title.innerText = getMusicName(src)
-                audioSource.src = src
                 try {
+                    audio.pause()
+                    audio.currentTime = 0
+                    title.innerText = getMusicName(src)
+                    audioSource.src = src
                     audio.load()
                     audio.play()
+                    // log(`播放：${src}`)
                 } catch (err) {
                     log(`play() error: ${err.message}`)
                 }

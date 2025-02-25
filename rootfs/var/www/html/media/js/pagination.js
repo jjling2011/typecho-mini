@@ -268,10 +268,10 @@ var Pagination = (function () {
         _generateStyle: function () {
             var str_css = `
           .page{margin:0;padding:0;list-style:none;}
-          .page li{float:left;height:1.5rem;margin:0 0.125rem 0 0;color:#495060;cursor:default}
+          .page li{float:left;margin:0 0.125rem 0 0;color:#495060;cursor:default}
           .page li.page-more{line-height:24px}
           .page .page-item.hide{display:none}
-          .page-first,.page-item,.page-last,.page-more{height:1.5rem;width:1.5rem;text-align:center;border-radius:4px;border:1px solid #d9d9d9;position:relative}
+          .page-first,.page-item,.page-last,.page-more{height:1.5rem;min-width:1.5rem;text-align:center;border-radius:4px;border:1px solid #d9d9d9;position:relative}
           .page-first,.page-last{background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABcUlEQVRYR+3Wv0vDQBQH8PcCEiWCm5t/RXEwIu2gpAElWbJqQBAUXPw/HN1KMf4DVm3aiEX8N1R0cRLcuiUpTxKwiqJ9uVy8pVnz4/vJ3bt3h6D4QsX5MAWwRsBy/DUNqUUALxrSQe/87EHW1LEATcePEMHKQwlek1QzB2H7WQaCB3B3Wgi4Ow6UiGABGp43Pxsb14hgykawAFnoiufNLcTGQDaCDagKUQhQBaIwYIxIjB4CNMrWhBAgC7XtQ530YVQWIQyQhSgF+AsBSKv9TvA0qVmVBnwgQB9eAcDGZyB1+51g618AtdrezOJSHH4FEFEYXQSblQOyYvzx90Rv6QjNm+7pY6WA31YCkVaPLtv3k8Kz+8I1oHQZ5vuCqkYke1MqNAWywwvVQFVnAtYI5OGJcYsAy2U3n+8rgwVouv4xAhzJDmdPge36dwBQV3YotZztdQ3xJDuWj1Lc53Q4ThNijwD3YyLPsWpA5MPcd6aAd3uY6yHvR4KoAAAAAElFTkSuQmCC');background-size:20px 20px;background-position:center center;background-repeat:no-repeat no-repeat}
           .page-first{transform:rotate(180deg)}
           .page-item.active,.page-item:hover,.page-more.active,.page-more:hover{color:#fff;background-color:#ae6b38;opacity:.6008}
